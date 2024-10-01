@@ -22,21 +22,23 @@ instance.interceptors.request.use(
 )
 
 // 响应拦截器
-instance.interceptors.request.use(
+instance.interceptors.response.use(
   (res) => {
     if (res.data.code === 0) {
       return res
     }
-    ElMessage.error(res.data.message || '服务异常')
+    ElMessage({ message: res.data.message || '服务异常', type: 'error' })
     return Promise.reject(res.data)
   },
   (err) => {
-    // 401错误：权限不足，或者 token过期
+    ElMessage({
+      message: err.response.data.message || '服务异常',
+      type: 'error'
+    })
+    console.log(err)
     if (err.response?.status === 401) {
       router.push('/login')
     }
-    // 错误默认情况
-    ElMessage.error(err.response.data.message || '服务异常')
     return Promise.reject(err)
   }
 )

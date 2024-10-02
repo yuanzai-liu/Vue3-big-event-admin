@@ -1,3 +1,4 @@
+import { useUserStore } from '@/stores'
 import { createRouter, createWebHistory } from 'vue-router'
 
 // createWebHashHistory :hash模式
@@ -33,6 +34,13 @@ const router = createRouter({
       ]
     }
   ]
+})
+
+// 登录访问拦截 => 默认放行
+router.beforeEach((to) => {
+  // 如果没有token，且访问非登录页面，则需要拦截登录
+  const useStore = useUserStore()
+  if (!useStore.token && to.path !== '/login') return '/login'
 })
 
 export default router

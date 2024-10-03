@@ -12,6 +12,7 @@ module.exports = {
     ecmaVersion: 'latest'
   },
   rules: {
+    'vue/valid-v-model': 'off',
     // prettier专注于代码的美观度 (格式化工具)
     // 前置：
     // 1. 禁用格式化插件 prettier  format on save 关闭

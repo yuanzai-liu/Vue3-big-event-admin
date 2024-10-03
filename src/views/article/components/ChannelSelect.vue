@@ -5,6 +5,9 @@ import { ref, onMounted } from 'vue'
 defineProps({
   modelValue: {
     type: [Number, String]
+  },
+  width: {
+    type: String
   }
 })
 
@@ -13,7 +16,7 @@ const channelList = ref([])
 const getChannelList = async () => {
   const res = await artGetChannelService()
   channelList.value = res.data.data
-  console.log(channelList.value)
+  // console.log(channelList.value)
 }
 onMounted(() => getChannelList())
 </script>
@@ -22,7 +25,7 @@ onMounted(() => getChannelList())
   <el-select
     :modelValue="modelValue"
     @update:modelValue="emit('update:modelValue', $event)"
-    style="width: 240px"
+    :style="{ width }"
   >
     <el-option
       v-for="channel in channelList"
